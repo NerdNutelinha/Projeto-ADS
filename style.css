@@ -1,64 +1,120 @@
-/Tirando a margem da página/
-body 
-{ margin: 0px;
+/* Tirando a margem da página */
+body {
+  margin: 0px;
   background-color: #101827;
   color: #f4f6fb;
-  font-family: Arial;
-  text-align: center; }
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
 
-/Caixa principal do jogo/
-.container
-{ width: 90%;
+/* Caixa principal do jogo */
+.container {
+  width: 90%;
+  max-width: 600px;
   margin: 50px auto;
   padding: 20px;
   background-color: #192538;
-  border-radius: 10px; }
+  border-radius: 10px;
+}
 
-/Texto pequeno/
-.tag { color: #b9aaff; font-size: 12px; }
+/* Texto pequeno */
+.tag {
+  color: #b9aaff;
+  font-size: 12px;
+}
 
-/Titulos/
-h1 { font-size: 30px; } 
-.subtitulo { color: #b7c2d5; }
+/* Títulos */
+h1 {
+  font-size: 30px;
+}
 
-/Placar/
-.placar 
-{ background-color: #111b2b;
+.subtitulo {
+  color: #b7c2d5;
+}
+
+/* Placar */
+.placar {
+  background-color: #111b2b;
   padding: 15px;
-  margin: 20px; }
-.pontos { display: inline-block; margin: 10px; }
-.pontos span { color: #b7c2d5; }
-.pontos strong { font-size: 25px; }
-.separador { font-size: 20px; }
+  margin: 20px 0;
+  border-radius: 8px;
+}
 
-/Botoes de jogar/
-.jogadas { margin-top: 20px; }
-.opcao 
-{ width: 120px;
-  height: 100px;
+.pontos {
+  display: inline-block;
+  margin: 10px;
+}
+
+.pontos span {
+  color: #b7c2d5;
+}
+
+.pontos strong {
+  font-size: 25px;
+}
+
+.separador {
+  font-size: 20px;
+}
+
+/* Botões de jogar */
+.jogadas {
+  margin-top: 20px;
+}
+
+.opcao {
+  width: 120px;
+  padding: 15px 10px;
   margin: 5px;
   background-color: #22314a;
   color: white;
   border: 1px solid white;
-  cursor: pointer; }
-.opcao:hover { background-color: #304366; }
-.emoji { font-size: 30px; }
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+}
 
-/Resultado/
-.resultado 
-{ margin-top: 20px;
+.opcao:hover {
+  background-color: #304366;
+}
+
+.emoji {
+  font-size: 30px;
+}
+
+/* Resultado */
+#resultado {
+  margin-top: 20px;
   padding: 10px;
   background-color: #111b2b;
-  font-size: 18px; }
-.detalhes { color: #b7c2d5; margin: 10px; }
+  font-size: 18px;
+  border-radius: 6px;
+}
 
-/Botao de reiniciar/
-.reiniciar
-{ padding: 10px 20px;
+#detalhes {
+  color: #b7c2d5;
+  margin: 10px;
+}
+
+/* Botão de reiniciar */
+#reiniciar {
+  padding: 10px 20px;
+  margin-top: 15px;
   background-color: #7c5cff;
   color: white;
   border: none;
-  cursor: pointer; }
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+}
 
-/Rodape/
-footer {  margin-top: 30px; color: #8fa0ba; font-size: 12px; }
+#reiniciar:hover {
+  background-color: #6a4be0;
+}
+
+/* Rodapé */
+.rodape {
+  margin-top: 30px;
+  color: #8fa0ba;
+  font-size: 12px;
+}
