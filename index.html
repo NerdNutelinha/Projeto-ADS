@@ -1,80 +1,39 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
-
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Jokenpô - Pedra, Papel e Tesoura</title>
-
+    <title>Jogo</title>
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-    <main class="container">
-
-        <header>
-            <p class="tag">JOGO INTERATIVO</p>
+    <!-- Uso excessivo de divs sem semântica -->
+    <div class="container">
+        <div class="titulo">
+            <p>JOGO INTERATIVO</p>
             <h1>Pedra, Papel e Tesoura</h1>
-            <p class="subtitulo">
-                Escolha sua jogada e desafie a maquina.
-            </p>
-        </header>
+            <p>Escolha sua jogada e desafie a maquina.</p>
+        </div>
 
-        <section class="placar">
-            <div class="pontos">
-                <span>Você</span>
-                <strong id="pontosJogador">0</strong>
-            </div>
+        <div class="placar">
+            <p>Você: <span id="pontosJogador">0</span></p>
+            <p>Maquina: <span id="pontosComputador">0</span></p>
+        </div>
 
-            <div class="separador">×</div>
+        <!-- Botões com JavaScript -->
+        <div class="jogadas">
+            <button onclick="jogar('pedra')">✊ Pedra</button>
+            <button onclick="jogar('papel')">✋ Papel</button>
+            <button onclick="jogar('tesoura')">✌️ Tesoura</button>
+        </div>
 
-            <div class="pontos">
-                <span>Maquina</span>
-                <strong id="pontosComputador">0</strong>
-            </div>
-        </section>
+        <div id="resultado">Escolha uma opção para começar!</div>
+        <div id="detalhes">O resultado aparecerá aqui.</div>
 
-        <section class="jogadas">
+        <button onclick="reiniciar()">Reiniciar jogo</button>
 
-            <button class="opcao" data-escolha="pedra">
-                <span class="emoji">✊</span>
-                <span>Pedra</span>
-            </button>
-
-            <button class="opcao" data-escolha="papel">
-                <span class="emoji">✋</span>
-                <span>Papel</span>
-            </button>
-
-            <button class="opcao" data-escolha="tesoura">
-                <span class="emoji">✌️</span>
-                <span>Tesoura</span>
-            </button>
-
-        </section>
-
-        <section id="resultado" class="resultado" aria-live="polite">
-            Escolha uma opção para começar!
-        </section>
-
-        <section id="detalhes" class="detalhes">
-            O resultado aparecerá aqui.
-        </section>
-
-        <button id="reiniciar" class="reiniciar">
-            Reiniciar jogo
-        </button>
-
-        <footer>
-            Feito com HTML, CSS e JavaScript
-        </footer>
-
-    </main>
+        <div class="rodape">Feito com HTML, CSS e JavaScript</div>
+    </div>
 
     <script src="script.js"></script>
-
 </body>
-
 </html>
