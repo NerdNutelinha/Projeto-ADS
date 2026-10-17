@@ -1,39 +1,39 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
-    <title>Jogo</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jogo - Pedra, Papel e Tesoura</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- Uso excessivo de divs sem semântica -->
-    <div class="container">
-        <div class="titulo">
-            <p>JOGO INTERATIVO</p>
-            <h1>Pedra, Papel e Tesoura</h1>
-            <p>Escolha sua jogada e desafie a maquina.</p>
-        </div>
-
-        <div class="placar">
-            <p>Você: <span id="pontosJogador">0</span></p>
-            <p>Maquina: <span id="pontosComputador">0</span></p>
-        </div>
-
-        <!-- Botões com JavaScript -->
-        <div class="jogadas">
-            <button onclick="jogar('pedra')">✊ Pedra</button>
-            <button onclick="jogar('papel')">✋ Papel</button>
-            <button onclick="jogar('tesoura')">✌️ Tesoura</button>
-        </div>
-
-        <div id="resultado">Escolha uma opção para começar!</div>
-        <div id="detalhes">O resultado aparecerá aqui.</div>
-
-        <button onclick="reiniciar()">Reiniciar jogo</button>
-
-        <div class="rodape">Feito com HTML, CSS e JavaScript</div>
+  <div class="container">
+    <div class="titulo">
+      <p>JOGO INTERATIVO</p>
+      <h1>Pedra, Papel e Tesoura</h1>
+      <p>Escolha sua jogada e desafie a máquina.</p>
     </div>
 
-    <script src="script.js"></script>
+    <div class="placar">
+      <p>Você: <span id="pontosJogador">0</span></p>
+      <p>Máquina: <span id="pontosComputador">0</span></p>
+    </div>
+
+    <div class="jogadas">
+      <button class="opcao" data-escolha="pedra">✊ Pedra</button>
+      <button class="opcao" data-escolha="papel">✋ Papel</button>
+      <button class="opcao" data-escolha="tesoura">✌️ Tesoura</button>
+    </div>
+
+    <div id="resultado">Escolha uma opção para começar!</div>
+    <div id="detalhes">O resultado aparecerá aqui.</div>
+
+    <button id="reiniciar">Reiniciar jogo</button>
+
+    <div class="rodape">Feito com HTML, CSS e JavaScript</div>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
