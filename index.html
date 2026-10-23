@@ -1,39 +1,798 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Jogo - Pedra, Papel e Tesoura</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>VotoSim | Simulador Eleitoral</title>
+
+    <meta name="description"
+          content="Simule cenários eleitorais, explore mapas e compare resultados.">
+
+    <meta name="theme-color" content="#10251d">
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Biblioteca para o mapa interativo -->
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    >
 </head>
+
 <body>
 
-  <div class="container">
-    <div class="titulo">
-      <p>JOGO INTERATIVO</p>
-      <h1>Pedra, Papel e Tesoura</h1>
-      <p>Escolha sua jogada e desafie a máquina.</p>
-    </div>
+    <header class="topbar">
 
-    <div class="placar">
-      <p>Você: <span id="pontosJogador">0</span></p>
-      <p>Máquina: <span id="pontosComputador">0</span></p>
-    </div>
+        <a class="brand" href="#">
+            <span class="brand-mark">VS</span>
 
-    <div class="jogadas">
-      <button class="opcao" data-escolha="pedra">✊ Pedra</button>
-      <button class="opcao" data-escolha="papel">✋ Papel</button>
-      <button class="opcao" data-escolha="tesoura">✌️ Tesoura</button>
-    </div>
+            <span>
+                Voto<span class="brand-light">Sim</span>
+                <small>PAINEL DE SIMULAÇÃO ELEITORAL</small>
+            </span>
+        </a>
 
-    <div id="resultado">Escolha uma opção para começar!</div>
-    <div id="detalhes">O resultado aparecerá aqui.</div>
+        <nav>
+            <a href="#painel">Painel</a>
+            <a href="#mapa">Mapa</a>
+            <a href="#dados">Dados oficiais</a>
+        </nav>
 
-    <button id="reiniciar">Reiniciar jogo</button>
+        <span class="demo-badge">
+            <i></i>
+            AMBIENTE DE SIMULAÇÃO
+        </span>
 
-    <div class="rodape">Feito com HTML, CSS e JavaScript</div>
-  </div>
+    </header>
 
-  <script src="script.js"></script>
+    <main>
+
+        <!-- APRESENTAÇÃO -->
+
+        <section class="hero">
+
+            <div>
+                <p class="eyebrow">
+                    DADOS • CENÁRIOS • TERRITÓRIO
+                </p>
+
+                <h1>
+                    Entenda os cenários.<br>
+                    <span>Explore cada região.</span>
+                </h1>
+
+                <p class="hero-copy">
+                    Monte sua própria simulação, compare candidatos
+                    e visualize como mudanças nos votos afetam
+                    o resultado nacional e local.
+                </p>
+
+                <div class="hero-note">
+                    <span>ⓘ</span>
+
+                    Os números iniciais são fictícios para
+                    demonstração. Não representam pesquisa,
+                    previsão nem resultado oficial.
+                </div>
+            </div>
+
+            <div class="hero-stat">
+
+                <span class="hero-stat-label">SEU CENÁRIO</span>
+
+                <strong id="heroTotal">1.000.000</strong>
+
+                <span>votos simulados</span>
+
+                <div class="mini-bars">
+                    <i></i><i></i><i></i><i></i>
+                    <i></i><i></i><i></i><i></i>
+                    <i></i><i></i><i></i><i></i>
+                </div>
+
+                <small>Atualizado automaticamente</small>
+
+            </div>
+
+        </section>
+
+
+        <!-- PAINEL NACIONAL -->
+
+        <section id="painel" class="section">
+
+            <div class="section-heading">
+
+                <div>
+                    <p class="eyebrow">01 / RESUMO NACIONAL</p>
+                    <h2>Painel de votação</h2>
+                </div>
+
+                <div class="actions">
+
+                    <button class="btn btn-outline" id="resetBtn">
+                        Restaurar exemplo
+                    </button>
+
+                    <button class="btn btn-primary" id="exportCsv">
+                        Baixar CSV
+                    </button>
+
+                    <button class="btn btn-dark" id="exportPrint">
+                        Baixar / imprimir PDF
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="candidate-grid">
+
+                <!-- FLÁVIO BOLSONARO -->
+
+                <article class="candidate-card flavio">
+
+                    <div class="candidate-top">
+
+                        <span class="candidate-symbol">F</span>
+
+                        <span class="lead-pill" id="flavioLead">
+                            CENÁRIO
+                        </span>
+
+                    </div>
+
+                    <p class="candidate-label">
+                        CANDIDATO • REFERÊNCIA
+                    </p>
+
+                    <h3>Flávio Bolsonaro</h3>
+
+                    <p class="party">Referência de simulação</p>
+
+                    <div class="candidate-percent" id="flavioPct">
+                        52,0%
+                    </div>
+
+                    <div class="progress">
+                        <span id="flavioBar"></span>
+                    </div>
+
+                    <div class="candidate-bottom">
+                        <span>Votos simulados</span>
+                        <strong id="flavioVotes">520.000</strong>
+                    </div>
+
+                </article>
+
+
+                <!-- LULA -->
+
+                <article class="candidate-card lula">
+
+                    <div class="candidate-top">
+
+                        <span class="candidate-symbol">L</span>
+
+                        <span class="lead-pill" id="lulaLead">
+                            CENÁRIO
+                        </span>
+
+                    </div>
+
+                    <p class="candidate-label">
+                        CANDIDATO • REFERÊNCIA
+                    </p>
+
+                    <h3>Luiz Inácio Lula da Silva</h3>
+
+                    <p class="party">Referência de simulação</p>
+
+                    <div class="candidate-percent" id="lulaPct">
+                        48,0%
+                    </div>
+
+                    <div class="progress">
+                        <span id="lulaBar"></span>
+                    </div>
+
+                    <div class="candidate-bottom">
+                        <span>Votos simulados</span>
+                        <strong id="lulaVotes">480.000</strong>
+                    </div>
+
+                </article>
+
+
+                <!-- DIFERENÇA -->
+
+                <article class="metric-card">
+
+                    <span class="metric-icon">↔</span>
+
+                    <span class="metric-label">DIFERENÇA</span>
+
+                    <strong id="marginVotes">40.000</strong>
+
+                    <span id="marginPct">
+                        4,0 pontos percentuais
+                    </span>
+
+                    <div class="metric-line"></div>
+
+                    <small>Entre os dois candidatos</small>
+
+                </article>
+
+
+                <!-- TOTAL -->
+
+                <article class="metric-card">
+
+                    <span class="metric-icon">▤</span>
+
+                    <span class="metric-label">TOTAL DE VOTOS</span>
+
+                    <strong id="totalVotes">1.000.000</strong>
+
+                    <span>votos no cenário</span>
+
+                    <div class="metric-line"></div>
+
+                    <small>Exclui votos brancos e nulos</small>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- SIMULADOR -->
+
+        <section class="section simulator">
+
+            <div class="section-heading">
+
+                <div>
+                    <p class="eyebrow">02 / CRIE SEU CENÁRIO</p>
+                    <h2>Ajuste os votos</h2>
+                </div>
+
+                <span class="soft-tag">
+                    Cálculo em tempo real
+                </span>
+
+            </div>
+
+
+            <div class="simulator-grid">
+
+                <!-- VOTOS FLÁVIO -->
+
+                <div class="slider-panel">
+
+                    <div class="slider-title">
+
+                        <span class="dot green"></span>
+
+                        <label for="flavioInput">
+                            Flávio Bolsonaro
+                        </label>
+
+                        <strong id="flavioInputValue">
+                            520.000
+                        </strong>
+
+                    </div>
+
+                    <input
+                        id="flavioInput"
+                        type="range"
+                        min="0"
+                        max="2000000"
+                        step="1000"
+                        value="520000"
+                        class="range-green"
+                    >
+
+                    <div class="range-labels">
+                        <span>0 votos</span>
+                        <span>2 milhões</span>
+                    </div>
+
+                    <div class="number-row">
+
+                        <label for="flavioNumber">
+                            Ou digite a quantidade
+                        </label>
+
+                        <input
+                            id="flavioNumber"
+                            type="number"
+                            min="0"
+                            max="1000000000"
+                            value="520000"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- VOTOS LULA -->
+
+                <div class="slider-panel">
+
+                    <div class="slider-title">
+
+                        <span class="dot red"></span>
+
+                        <label for="lulaInput">
+                            Luiz Inácio Lula da Silva
+                        </label>
+
+                        <strong id="lulaInputValue">
+                            480.000
+                        </strong>
+
+                    </div>
+
+                    <input
+                        id="lulaInput"
+                        type="range"
+                        min="0"
+                        max="2000000"
+                        step="1000"
+                        value="480000"
+                        class="range-red"
+                    >
+
+                    <div class="range-labels">
+                        <span>0 votos</span>
+                        <span>2 milhões</span>
+                    </div>
+
+                    <div class="number-row">
+
+                        <label for="lulaNumber">
+                            Ou digite a quantidade
+                        </label>
+
+                        <input
+                            id="lulaNumber"
+                            type="number"
+                            min="0"
+                            max="1000000000"
+                            value="480000"
+                        >
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <p class="hint">
+                Altere qualquer valor para recalcular os totais,
+                as porcentagens e os gráficos automaticamente.
+            </p>
+
+        </section>
+
+
+        <!-- MAPA -->
+
+        <section id="mapa" class="section">
+
+            <div class="section-heading">
+
+                <div>
+                    <p class="eyebrow">03 / DISTRIBUIÇÃO GEOGRÁFICA</p>
+
+                    <h2>Mapa eleitoral interativo</h2>
+
+                    <p class="section-sub">
+                        Selecione um estado ou município para
+                        abrir e editar um cenário local.
+                    </p>
+                </div>
+
+                <div class="map-legend">
+
+                    <span>
+                        <i class="legend-green"></i>
+                        Vantagem de Flávio
+                    </span>
+
+                    <span>
+                        <i class="legend-red"></i>
+                        Vantagem de Lula
+                    </span>
+
+                    <span>
+                        <i class="legend-gray"></i>
+                        Sem dados
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="map-layout">
+
+                <div class="map-box">
+
+                    <div class="map-toolbar">
+
+                        <label for="stateSelect">Estado</label>
+
+                        <select id="stateSelect">
+                            <option value="">Brasil inteiro</option>
+                        </select>
+
+                        <button class="btn btn-outline btn-small" id="fitMap">
+                            Enquadrar mapa
+                        </button>
+
+                    </div>
+
+                    <div id="map" role="application"
+                         aria-label="Mapa interativo do Brasil">
+                    </div>
+
+                    <div class="map-foot">
+                        O mapa depende de conexão com a internet.
+                    </div>
+
+                </div>
+
+
+                <!-- RESULTADO DA REGIÃO -->
+
+                <aside class="region-panel">
+
+                    <p class="eyebrow">REGIÃO SELECIONADA</p>
+
+                    <h3 id="regionName">Brasil</h3>
+
+                    <p class="region-description" id="regionDescription">
+                        Resumo do cenário nacional
+                    </p>
+
+
+                    <div class="region-result">
+
+                        <div>
+                            <span class="dot green"></span>
+                            Flávio Bolsonaro
+                        </div>
+
+                        <strong id="regionFlavio">52,0%</strong>
+
+                        <small id="regionFlavioVotes">
+                            5.200 votos
+                        </small>
+
+                    </div>
+
+
+                    <div class="region-result">
+
+                        <div>
+                            <span class="dot red"></span>
+                            Lula
+                        </div>
+
+                        <strong id="regionLula">48,0%</strong>
+
+                        <small id="regionLulaVotes">
+                            4.800 votos
+                        </small>
+
+                    </div>
+
+
+                    <div class="region-winner" id="regionWinner">
+                        Vantagem de Flávio Bolsonaro
+                    </div>
+
+
+                    <!-- EDIÇÃO LOCAL -->
+
+                    <div class="region-edit">
+
+                        <h4>Editar cenário local</h4>
+
+                        <label for="localFlavio">
+                            Votos de Flávio
+                        </label>
+
+                        <input
+                            id="localFlavio"
+                            type="number"
+                            min="0"
+                            value="5200"
+                        >
+
+                        <label for="localLula">
+                            Votos de Lula
+                        </label>
+
+                        <input
+                            id="localLula"
+                            type="number"
+                            min="0"
+                            value="4800"
+                        >
+
+                        <button id="saveLocal" class="btn btn-primary full">
+                            Aplicar à região
+                        </button>
+
+                        <p class="hint">
+                            Os valores locais são simulações
+                            independentes e não alteram os totais nacionais.
+                        </p>
+
+                    </div>
+
+                </aside>
+
+            </div>
+
+
+            <div class="section-sub map-explain">
+
+                <strong>Sobre o mapa:</strong>
+
+                Os estados são coloridos conforme o cenário ilustrativo.
+                Ao selecionar um estado, você pode explorar municípios
+                por meio da lista abaixo. As cores não indicam
+                preferência real do eleitorado.
+
+            </div>
+
+
+            <!-- MUNICÍPIOS -->
+
+            <div class="municipality-panel">
+
+                <div class="section-heading compact">
+
+                    <div>
+                        <p class="eyebrow">DETALHE MUNICIPAL</p>
+                        <h3>Municípios do estado</h3>
+                    </div>
+
+                    <input
+                        id="municipalitySearch"
+                        class="search-input"
+                        type="search"
+                        placeholder="Buscar município..."
+                    >
+
+                </div>
+
+                <div id="municipalityList" class="municipality-list">
+                    <p>Escolha um estado para carregar os municípios.</p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- DADOS OFICIAIS -->
+
+        <section id="dados" class="section official-section">
+
+            <div class="section-heading">
+
+                <div>
+                    <p class="eyebrow">04 / FONTES E COMPARAÇÃO</p>
+
+                    <h2>Dados eleitorais oficiais</h2>
+
+                    <p class="section-sub">
+                        Importe um arquivo oficial para comparar
+                        com seu cenário, sem misturar os dados.
+                    </p>
+                </div>
+
+                <span class="official-tag">
+                    Fonte externa identificada
+                </span>
+
+            </div>
+
+
+            <div class="official-grid">
+
+                <!-- IMPORTAR CSV -->
+
+                <div class="official-card">
+
+                    <div class="official-icon">↥</div>
+
+                    <h3>Importar CSV</h3>
+
+                    <p>
+                        Use uma planilha que contenha município,
+                        estado, candidato e total de votos.
+                        O arquivo fica no seu navegador.
+                    </p>
+
+                    <label class="upload-btn" for="officialFile">
+                        Escolher arquivo CSV
+                    </label>
+
+                    <input
+                        id="officialFile"
+                        type="file"
+                        accept=".csv,text/csv"
+                        hidden
+                    >
+
+                    <p id="uploadStatus" class="upload-status">
+                        Nenhum arquivo importado.
+                    </p>
+
+                    <button id="downloadTemplate"
+                            class="btn btn-outline full">
+                        Baixar modelo CSV
+                    </button>
+
+                </div>
+
+
+                <!-- FONTES -->
+
+                <div class="official-card">
+
+                    <div class="official-icon">↗</div>
+
+                    <h3>Consultar fonte oficial</h3>
+
+                    <p>
+                        Consulte dados publicados pela Justiça Eleitoral.
+                        Confira a eleição e a abrangência antes de importar.
+                    </p>
+
+                    <a class="source-link"
+                       href="https://dadosabertos.tse.jus.br/"
+                       target="_blank"
+                       rel="noopener">
+                        Portal de Dados Abertos do TSE ↗
+                    </a>
+
+                    <a class="source-link"
+                       href="https://www.tse.jus.br/eleicoes/estatisticas/repositorio-de-dados-eleitorais-1"
+                       target="_blank"
+                       rel="noopener">
+                        Repositório de Dados Eleitorais ↗
+                    </a>
+
+                    <a class="source-link"
+                       href="https://www.ibge.gov.br/geociencias/organizacao-do-territorio/malhas-territoriais.html"
+                       target="_blank"
+                       rel="noopener">
+                        Malhas territoriais do IBGE ↗
+                    </a>
+
+                </div>
+
+
+                <!-- COMPARAÇÃO -->
+
+                <div class="official-card compare-card">
+
+                    <div class="official-icon">⇄</div>
+
+                    <h3>Comparação importada</h3>
+
+                    <p id="officialSummary">
+                        Ainda não há dados oficiais importados.
+                    </p>
+
+                    <div id="officialCompare" class="compare-results">
+                        <span>Importe um CSV para comparar.</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="warning-note">
+
+                <strong>Importante:</strong>
+
+                o VotoSim não consulta automaticamente uma API eleitoral
+                nem garante a autenticidade dos arquivos importados.
+                Confira a origem, a eleição, o turno e o tipo de votação.
+                A importação serve para comparação.
+
+            </div>
+
+        </section>
+
+
+        <!-- EXPORTAÇÃO -->
+
+        <section class="section export-section">
+
+            <div>
+
+                <p class="eyebrow">05 / SEU RELATÓRIO</p>
+
+                <h2>Leve os resultados com você</h2>
+
+                <p class="section-sub">
+                    Exporte os votos simulados em CSV ou use
+                    a opção de impressão do navegador para salvar um PDF.
+                </p>
+
+            </div>
+
+            <div class="actions">
+
+                <button class="btn btn-primary" id="exportCsvBottom">
+                    Baixar relatório CSV
+                </button>
+
+                <button class="btn btn-dark" id="exportPrintBottom">
+                    Gerar PDF / imprimir
+                </button>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- RODAPÉ -->
+
+    <footer>
+
+        <a class="brand footer-brand" href="#">
+
+            <span class="brand-mark">VS</span>
+
+            <span>
+                Voto<span class="brand-light">Sim</span>
+                <small>SIMULAÇÃO ELEITORAL INDEPENDENTE</small>
+            </span>
+
+        </a>
+
+        <p>
+            Projeto demonstrativo. Não é pesquisa eleitoral,
+            previsão, apuração oficial ou ferramenta de votação real.
+        </p>
+
+        <span>
+            © <span id="year"></span> VotoSim
+        </span>
+
+    </footer>
+
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+
+    <!-- BIBLIOTECAS E JAVASCRIPT DO PROJETO -->
+
+    <script
+        src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+    </script>
+
+    <script src="app.js"></script>
+
 </body>
 </html>
